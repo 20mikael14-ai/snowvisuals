@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Snow Visuals — визуальный мод для Minecraft 1.21.4</title>
+  <meta name="description" content="Snow Visuals — бесплатный визуальный мод для Minecraft 1.21.4 на Fabric: красивое меню, HUD, PvP-визуалы, снежное главное меню и встроенный Sodium.">
+  <meta property="og:title" content="Snow Visuals">
+  <meta property="og:description" content="Визуальный мод для Minecraft 1.21.4 (Fabric) в черно-белом стиле.">
+  <meta property="og:image" content="img/logo_text.png">
+  <meta name="theme-color" content="#070707">
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="snow" aria-hidden="true"></canvas>
+
+  <header class="nav">
+    <a class="brand" href="#top">
+      <img src="img/favicon.png" alt="" width="28" height="28">
+      <span>Snow <b>Visuals</b></span>
+    </a>
+    <nav class="links">
+      <a href="#features">Функции</a>
+      <a href="#gallery">Скриншоты</a>
+      <a href="#install">Установка</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-small js-download" href="#download">Скачать</a>
+  </header>
+
+  <main id="top">
+    <!-- Первый экран -->
+    <section class="hero">
+      <div class="hero-text">
+        <p class="pill">Minecraft 1.21.4 · Fabric</p>
+        <h1 class="pixel">SNOW<br>VISUALS</h1>
+        <p class="lead">Визуальный мод в черно-белом стиле: удобное меню, красивый HUD, PvP-визуалы, снежное главное меню и встроенный Sodium для высокого FPS.</p>
+
+        <div class="download-box" id="download">
+          <a class="btn btn-big js-download" href="#" rel="noopener">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 19h16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Скачать <span class="js-version">v1.6.1</span>
+          </a>
+          <div class="download-meta">
+            <span class="js-size">1.2 МБ</span>
+            <span class="dot"></span>
+            <span class="js-date">для Fabric 1.21.4</span>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <b class="js-downloads">—</b>
+            <span>скачиваний</span>
+          </div>
+          <div class="stat">
+            <b class="js-features">50+</b>
+            <span>функций</span>
+          </div>
+          <div class="stat">
+            <b>0 ₽</b>
+            <span>бесплатно</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-shot">
+        <img src="img/menu.jpg" alt="Меню Snow Visuals с функциями по категориям" width="1600" height="900">
+      </div>
+    </section>
+
+    <!-- Главные фишки -->
+    <section class="section">
+      <h2 class="title">Что внутри</h2>
+      <p class="subtitle">Все, что нужно для красивой и удобной игры, в одном файле.</p>
+
+      <div class="showcase">
+        <article class="show">
+          <img src="img/settings.jpg" alt="Настройки функции прямо в карточке" loading="lazy">
+          <div>
+            <h3>Удобное меню на правый Shift</h3>
+            <p>Категории слева, поиск сверху, карточки функций в две колонки. Каждой функции можно назначить клавишу, добавить ее в избранное и настроить прямо в карточке: ползунки, цвета, режимы.</p>
+          </div>
+        </article>
+        <article class="show reverse">
+          <img src="img/world.jpg" alt="HUD, China Hat, снег и TargetInfo в игре" loading="lazy">
+          <div>
+            <h3>Красивый HUD</h3>
+            <p>FPS, пинг, координаты, клавиши, броня, зелья, тотемы, комбо и не только. Все элементы в едином стиле, а в редакторе HUD их можно расставить мышкой где угодно.</p>
+          </div>
+        </article>
+        <article class="show">
+          <img src="img/enchant.jpg" alt="Красный блеск зачарований на мече" loading="lazy">
+          <div>
+            <h3>PvP-визуалы</h3>
+            <p>Свой цвет блеска чар, цвет удара, частицы и звук при ударе, низкий огонь, свой прицел, ViewModel, растянутое разрешение и зум с плавной анимацией.</p>
+          </div>
+        </article>
+        <article class="show reverse">
+          <img src="img/title.jpg" alt="Главное меню со снегом" loading="lazy">
+          <div>
+            <h3>Снежное главное меню</h3>
+            <p>Черный фон с падающим снегом, новые кнопки и красивые экраны загрузки игры, ресурспаков и мира. Все меню игры в одном черно-белом стиле.</p>
+          </div>
+        </article>
+        <article class="show">
+          <img src="img/loading.jpg" alt="Экран загрузки Snow Visuals" loading="lazy">
+          <div>
+            <h3>Sodium уже внутри</h3>
+            <p>Мод сразу идет со встроенным Sodium, поэтому FPS выше и при заходе в мир меньше лагов. Отдельно ничего качать не нужно.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Все функции -->
+    <section class="section" id="features">
+      <h2 class="title">Все функции</h2>
+      <p class="subtitle">Нажми на категорию, чтобы посмотреть, что в ней.</p>
+      <div class="tabs" id="tabs" role="tablist"></div>
+      <div class="feature-grid" id="feature-grid"></div>
+    </section>
+
+    <!-- Галерея -->
+    <section class="section" id="gallery">
+      <h2 class="title">Скриншоты</h2>
+      <p class="subtitle">Нажми на картинку, чтобы открыть ее крупно.</p>
+      <div class="gallery">
+        <img src="img/menu.jpg" alt="Меню функций" loading="lazy">
+        <img src="img/settings.jpg" alt="Настройки функции" loading="lazy">
+        <img src="img/world.jpg" alt="HUD и визуалы в игре" loading="lazy">
+        <img src="img/hud.jpg" alt="TargetInfo и HUD" loading="lazy">
+        <img src="img/editor.jpg" alt="Редактор HUD" loading="lazy">
+        <img src="img/enchant.jpg" alt="Custom Enchantment" loading="lazy">
+        <img src="img/title.jpg" alt="Главное меню" loading="lazy">
+        <img src="img/singleplayer.jpg" alt="Выбор мира в стиле Snow Visuals" loading="lazy">
+        <img src="img/level.jpg" alt="Подготовка мира" loading="lazy">
+      </div>
+    </section>
+
+    <!-- Установка -->
+    <section class="section" id="install">
+      <h2 class="title">Установка</h2>
+      <p class="subtitle">Займет пару минут.</p>
+      <ol class="steps">
+        <li>
+          <span class="num">1</span>
+          <div>
+            <h3>Поставь Fabric</h3>
+            <p>Установи <a href="https://fabricmc.net/use/installer/" target="_blank" rel="noopener">Fabric Loader</a> для Minecraft <b>1.21.4</b> или выбери Fabric в своем лаунчере.</p>
+          </div>
+        </li>
+        <li>
+          <span class="num">2</span>
+          <div>
+            <h3>Скачай Fabric API</h3>
+            <p>Возьми <a href="https://modrinth.com/mod/fabric-api" target="_blank" rel="noopener">Fabric API</a> для 1.21.4 и положи в папку <code>.minecraft/mods</code>.</p>
+          </div>
+        </li>
+        <li>
+          <span class="num">3</span>
+          <div>
+            <h3>Добавь Snow Visuals</h3>
+            <p><a href="#download" class="js-download">Скачай мод</a> и положи файл в ту же папку <code>mods</code>. Sodium уже внутри.</p>
+          </div>
+        </li>
+        <li>
+          <span class="num">4</span>
+          <div>
+            <h3>Играй</h3>
+            <p>Зайди в игру с профилем Fabric 1.21.4 и нажми <kbd>Правый Shift</kbd>, чтобы открыть меню.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <h2 class="title">Вопросы</h2>
+      <div class="faq">
+        <details>
+          <summary>Как открыть меню?</summary>
+          <p>Нажми <kbd>Правый Shift</kbd> в игре. Клавишу можно поменять в настройках управления Minecraft, раздел «Snow Visuals».</p>
+        </details>
+        <details>
+          <summary>Нужно ли ставить Sodium?</summary>
+          <p>Нет, он уже встроен в мод. Если у тебя стоит Sodium новее, игра сама выберет более новую версию.</p>
+        </details>
+        <details>
+          <summary>Где хранятся настройки?</summary>
+          <p>В файле <code>.minecraft/config/snowvisuals.json</code>. Все сохраняется автоматически.</p>
+        </details>
+        <details>
+          <summary>Что за снежинка у ника?</summary>
+          <p>Ее видят все игроки с Snow Visuals: так видно, у кого еще стоит мод. Работает на обычных серверах без плагинов.</p>
+        </details>
+        <details>
+          <summary>Почему TargetInfo пишет «скрыто сервером»?</summary>
+          <p>Некоторые серверы специально не отправляют настоящее здоровье игроков. В таком случае мод честно об этом пишет, а если сервер показывает здоровье под ником, берет его оттуда.</p>
+        </details>
+        <details>
+          <summary>Это бесплатно?</summary>
+          <p>Да, полностью бесплатно.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="cta">
+      <img src="img/logo.png" alt="" width="72" height="72">
+      <h2 class="pixel">Готов к снегу?</h2>
+      <a class="btn btn-big js-download" href="#">Скачать <span class="js-version">v1.6.1</span></a>
+      <p class="muted">Уже скачали <b class="js-downloads">—</b> раз</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Snow Visuals · <span class="js-version">v1.6.1</span></p>
+    <p class="muted">Не является официальным продуктом Minecraft. Не связан с Mojang или Microsoft.</p>
+  </footer>
+
+  <div class="lightbox" id="lightbox" hidden>
+    <button class="lightbox-close" aria-label="Закрыть">×</button>
+    <img alt="">
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
