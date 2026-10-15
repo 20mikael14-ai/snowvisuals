@@ -125,13 +125,16 @@ function formatDate(iso) {
   return new Date(iso).toLocaleDateString("ru-RU", { day: "numeric", month: "long", year: "numeric" });
 }
 
-function countUp(el, target) {
+// Последнее показанное число: новое плавно досчитывается от него, а не от нуля
+let shownDownloads = 0;
+
+function countUp(el, from, target) {
   const start = performance.now();
   const dur = 1200;
   function step(now) {
     const t = Math.min(1, (now - start) / dur);
     const eased = 1 - Math.pow(1 - t, 3);
-    el.textContent = Math.round(target * eased).toLocaleString("ru-RU");
+    el.textContent = Math.round(from + (target - from) * eased).toLocaleString("ru-RU");
     if (t < 1) requestAnimationFrame(step);
   }
   requestAnimationFrame(step);
@@ -146,23 +149,31 @@ function applyRelease(info) {
   if (info.size) document.querySelectorAll(".js-size").forEach((el) => (el.textContent = formatSize(info.size)));
   if (info.date) document.querySelectorAll(".js-date").forEach((el) => (el.textContent = "от " + formatDate(info.date)));
   if (typeof info.downloads === "number") {
-    document.querySelectorAll(".js-downloads").forEach((el) => countUp(el, info.downloads));
+    const first = document.querySelector(".js-downloads").textContent === "—";
+    if (first || info.downloads !== shownDownloads) {
+      const from = first ? 0 : shownDownloads;
+      document.querySelectorAll(".js-downloads").forEach((el) => countUp(el, from, info.downloads));
+      shownDownloads = info.downloads;
+    }
   }
 }
 
-async function loadRelease() {
-  applyRelease(FALLBACK);
+const CACHE_KEY = `sv-release-${GITHUB_USER}/${GITHUB_REPO}`;
+const REFRESH_MS = 90 * 1000; // пока страница открыта: 40 запросов в час, лимит GitHub - 60
+
+// useCache = true только при открытии страницы: не дергаем GitHub, если смотрели меньше 90 секунд назад
+async function loadRelease(useCache) {
   if (GITHUB_USER === "YOUR_GITHUB_NAME") return; // ник еще не вписан
 
-  // Кэш на 10 минут: у GitHub лимит 60 запросов в час на одного посетителя
-  const cacheKey = `sv-release-${GITHUB_USER}/${GITHUB_REPO}`;
-  try {
-    const cached = JSON.parse(localStorage.getItem(cacheKey) || "null");
-    if (cached && Date.now() - cached.time < 10 * 60 * 1000) {
-      applyRelease(cached.info);
-      return;
-    }
-  } catch (e) { /* localStorage может быть недоступен */ }
+  if (useCache) {
+    try {
+      const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || "null");
+      if (cached && Date.now() - cached.time < REFRESH_MS) {
+        applyRelease(cached.info);
+        return;
+      }
+    } catch (e) { /* localStorage может быть недоступен */ }
+  }
 
   try {
     const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/releases?per_page=100`);
@@ -185,12 +196,22 @@ async function loadRelease() {
       downloads,
     };
     applyRelease(info);
-    try { localStorage.setItem(cacheKey, JSON.stringify({ time: Date.now(), info })); } catch (e) { /* ничего */ }
+    try { localStorage.setItem(CACHE_KEY, JSON.stringify({ time: Date.now(), info })); } catch (e) { /* ничего */ }
   } catch (e) {
-    console.warn("GitHub недоступен, показываю запасные данные", e);
+    console.warn("GitHub недоступен, показываю последние данные", e);
   }
 }
-loadRelease();
+
+applyRelease(FALLBACK);
+loadRelease(true);
+
+// Сами перепроверяем счетчик, пока страница открыта. Если вкладка в фоне - не тратим лимит.
+setInterval(() => {
+  if (document.visibilityState === "visible") loadRelease(false);
+}, REFRESH_MS);
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") loadRelease(true);
+});
 
 // ==================== Галерея ====================
 (function lightbox() {
