@@ -1,0 +1,360 @@
+:root {
+  --bg: #070707;
+  --bg2: #0d0d0d;
+  --card: #111111;
+  --card-hover: #161616;
+  --border: #222222;
+  --border-hover: #3a3a3a;
+  --text: #f2f2f2;
+  --muted: #8c8c8c;
+  --dim: #555555;
+  --radius: 16px;
+  --font: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --pixel: "Press Start 2P", monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: radial-gradient(1200px 700px at 70% -10%, #1a1a1a 0%, transparent 60%), var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+#snow {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+header, main, footer { position: relative; z-index: 1; }
+
+a { color: var(--text); }
+
+img { max-width: 100%; display: block; }
+
+code, kbd {
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.9em;
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1px 6px;
+}
+
+.pixel { font-family: var(--pixel); font-weight: 400; letter-spacing: 0.02em; }
+.muted { color: var(--muted); }
+
+/* ---------- Навигация ---------- */
+.nav {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 14px max(16px, calc((100% - 1160px) / 2));
+  background: rgba(7, 7, 7, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  z-index: 10;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 18px;
+}
+.brand img { image-rendering: pixelated; border-radius: 6px; }
+.brand b { color: var(--muted); font-weight: 500; }
+
+.links { display: flex; gap: 22px; margin-left: auto; }
+.links a { color: var(--muted); text-decoration: none; font-weight: 500; transition: color .2s; }
+.links a:hover { color: var(--text); }
+
+/* ---------- Кнопки ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--text);
+  color: #0a0a0a;
+  text-decoration: none;
+  font-weight: 800;
+  border-radius: 12px;
+  border: 1px solid var(--text);
+  transition: transform .15s, box-shadow .2s, background .2s;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 10px 40px rgba(255, 255, 255, 0.18); }
+.btn:active { transform: translateY(0); }
+.btn-small { padding: 8px 16px; font-size: 14px; }
+.btn-big { padding: 16px 28px; font-size: 18px; }
+.btn .js-version { opacity: 0.6; font-weight: 700; }
+
+/* ---------- Первый экран ---------- */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 56px;
+  align-items: center;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 80px 16px 72px;
+}
+
+.pill {
+  display: inline-block;
+  margin: 0 0 22px;
+  padding: 6px 14px;
+  border: 1px solid var(--border-hover);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(34px, 5.4vw, 64px);
+  line-height: 1.25;
+  text-shadow: 0 6px 0 #1d1d1d, 0 0 40px rgba(255, 255, 255, 0.12);
+}
+
+.lead { color: #bdbdbd; font-size: 18px; max-width: 520px; margin: 26px 0 32px; }
+
+.download-box { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+.download-meta { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 14px; }
+.dot { width: 4px; height: 4px; border-radius: 50%; background: var(--dim); }
+
+.stats { display: flex; gap: 14px; margin-top: 36px; flex-wrap: wrap; }
+.stat {
+  display: flex;
+  flex-direction: column;
+  min-width: 120px;
+  padding: 14px 18px;
+  background: rgba(17, 17, 17, 0.8);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+.stat b { font-size: 26px; font-weight: 800; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.stat span { color: var(--muted); font-size: 13px; }
+
+.hero-shot {
+  position: relative;
+  border-radius: 18px;
+  padding: 8px;
+  background: linear-gradient(160deg, #2a2a2a, #0f0f0f 60%);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px #262626;
+  transform: perspective(1400px) rotateY(-6deg) rotateX(3deg);
+  transition: transform .5s;
+}
+.hero-shot:hover { transform: perspective(1400px) rotateY(0) rotateX(0); }
+.hero-shot img { border-radius: 12px; image-rendering: auto; }
+
+/* ---------- Секции ---------- */
+.section { max-width: 1160px; margin: 0 auto; padding: 72px 16px; }
+.title { font-size: clamp(28px, 4vw, 40px); font-weight: 800; margin: 0 0 8px; letter-spacing: -0.01em; }
+.subtitle { color: var(--muted); margin: 0 0 36px; }
+
+/* Фишки с картинками */
+.showcase { display: flex; flex-direction: column; gap: 28px; }
+.show {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 36px;
+  align-items: center;
+  padding: 22px;
+  background: rgba(17, 17, 17, 0.75);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: border-color .2s;
+}
+.show:hover { border-color: var(--border-hover); }
+.show.reverse { grid-template-columns: 1fr 1.2fr; }
+.show.reverse img { order: 2; }
+.show img { border-radius: 12px; border: 1px solid var(--border); }
+.show h3 { font-size: 24px; margin: 0 0 10px; }
+.show p { color: #b5b5b5; margin: 0; }
+
+/* Вкладки функций */
+.tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 22px; }
+.tab {
+  padding: 9px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--muted);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s;
+}
+.tab:hover { color: var(--text); border-color: var(--border-hover); }
+.tab.active { background: var(--text); color: #0a0a0a; border-color: var(--text); }
+.tab small { opacity: 0.6; margin-left: 4px; }
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+}
+.feature {
+  padding: 16px 18px;
+  background: rgba(17, 17, 17, 0.85);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  transition: border-color .2s, transform .2s;
+  animation: pop .35s ease both;
+}
+.feature:hover { border-color: var(--border-hover); transform: translateY(-2px); }
+.feature h4 { margin: 0 0 4px; font-size: 16px; display: flex; align-items: center; gap: 8px; }
+.feature h4::before { content: "❄"; color: var(--muted); font-size: 13px; }
+.feature p { margin: 0; color: var(--muted); font-size: 14px; }
+
+@keyframes pop { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* Галерея */
+.gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.gallery img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  cursor: zoom-in;
+  transition: transform .2s, border-color .2s;
+}
+.gallery img:hover { transform: scale(1.02); border-color: var(--border-hover); }
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.9);
+  cursor: zoom-out;
+}
+.lightbox[hidden] { display: none; }
+.lightbox img { max-height: 90vh; border-radius: 12px; border: 1px solid var(--border-hover); }
+.lightbox-close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  background: none;
+  border: 0;
+  color: var(--text);
+  font-size: 40px;
+  cursor: pointer;
+}
+
+/* Установка */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.steps li {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px;
+  background: rgba(17, 17, 17, 0.85);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.num {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--text);
+  color: #0a0a0a;
+  font-family: var(--pixel);
+  font-size: 13px;
+}
+.steps h3 { margin: 0 0 6px; font-size: 18px; }
+.steps p { margin: 0; color: var(--muted); font-size: 15px; }
+
+/* FAQ */
+.faq { display: flex; flex-direction: column; gap: 10px; max-width: 820px; }
+.faq details {
+  background: rgba(17, 17, 17, 0.85);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 4px 20px;
+  transition: border-color .2s;
+}
+.faq details[open] { border-color: var(--border-hover); }
+.faq summary {
+  cursor: pointer;
+  list-style: none;
+  font-weight: 700;
+  padding: 14px 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; color: var(--muted); font-size: 20px; line-height: 1; transition: transform .2s; }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq details p { margin: 0 0 16px; color: #b5b5b5; }
+
+/* Призыв скачать */
+.cta {
+  max-width: 1160px;
+  margin: 40px auto 0;
+  padding: 72px 16px 88px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  text-align: center;
+}
+.cta img { image-rendering: pixelated; border-radius: 16px; border: 1px solid var(--border-hover); }
+.cta h2 { margin: 0; font-size: clamp(20px, 3vw, 30px); }
+
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 16px;
+  text-align: center;
+  font-size: 14px;
+}
+.footer p { margin: 4px 0; }
+
+/* ---------- Адаптив ---------- */
+@media (max-width: 960px) {
+  .hero { grid-template-columns: 1fr; padding-top: 48px; gap: 40px; }
+  .hero-shot { transform: none; }
+  .show, .show.reverse { grid-template-columns: 1fr; gap: 18px; }
+  .show.reverse img { order: 0; }
+  .steps { grid-template-columns: 1fr 1fr; }
+  .gallery { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 640px) {
+  .links { display: none; }
+  .nav .btn-small { margin-left: auto; }
+  .steps, .gallery { grid-template-columns: 1fr; }
+  .btn-big { width: 100%; justify-content: center; }
+  .download-box { align-items: stretch; width: 100%; }
+  .stat { flex: 1; min-width: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
